@@ -1,7 +1,7 @@
 require 'socket'
+require 'hurley'
+
 server = TCPServer.new(9292)
-
-
 n = -1
 
 while (client = server.accept)
@@ -22,5 +22,4 @@ while (client = server.accept)
             "Hello, World! (#{n += 1})"
   client.puts headers
   client.puts output
-
 end
