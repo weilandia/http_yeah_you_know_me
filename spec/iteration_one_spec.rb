@@ -19,7 +19,6 @@ class IterartionZeroTest < Minitest::Test
 
   def test_for_hello_world_in_the_body
     body_split = response.body.split
-    require "pry"; binding.pry
     assert_equal "Hello, World!", body_split[0..1].join(' ')
   end
 
