@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'socket'
 require 'hurley'
-
+require 'pry'
 class IterartionZeroTest < Minitest::Test
 
   attr_reader :response
@@ -17,10 +17,11 @@ class IterartionZeroTest < Minitest::Test
     assert response.success?
   end
 
-  def test_for_a_body
+  def test_for_hello_world_in_the_body
     body_split = response.body.split
-    assert_equal "Hello,", body_split[0]
+    assert_equal "Hello, World!", body_split[0..1].join(' ')
   end
+
 
   def test_for_the_url
     url = response.request.url.to_s
@@ -33,10 +34,18 @@ class IterartionZeroTest < Minitest::Test
   end
 
   def test_the_server_increments_each_request
-    first_time = response.body.split[2].split("")[1..2].join.to_i
+    first_time = response.body.split[2].gsub(/[()]/, "").to_i
     second_response = Hurley.get("http://127.0.0.1:9292")
-    second_time = second_response.body.split[2].split("")[1..2].join.to_i
+    second_time = second_response.body.split[2].gsub(/[()]/, "").to_i
     assert_equal second_time, first_time + 1
+  end
+
+  def test_the_server_is_ruby
+    assert_equal "ruby", response.header["Server"]
+  end
+
+  def test_the_content_type
+    assert_equal "text/html; charset=iso-8859-1", response.header["Content-Type"]
   end
 
 
