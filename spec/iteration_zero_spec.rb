@@ -4,7 +4,6 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'socket'
 require 'hurley'
-require 'pry'
 class IterartionZeroTest < Minitest::Test
 
   attr_reader :response
