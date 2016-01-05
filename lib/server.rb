@@ -1,7 +1,8 @@
+$LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require 'socket'
 require 'hurley'
-require_relative '../lib/request'
-require_relative '../lib/response'
+require 'request'
+require 'response'
 
 class Server
 
