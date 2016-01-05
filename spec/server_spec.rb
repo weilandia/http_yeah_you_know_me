@@ -8,9 +8,5 @@ class ServerTest < Minitest::Test
 
   def setup
     @response = Hurley.get("http://127.0.0.1:9292")
-    require "pry"; binding.pry
   end
-
-
-
 end
