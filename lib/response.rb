@@ -4,11 +4,10 @@ require 'hurley'
 class Response
 
   def initialize(request_format, client, n)
-    @n = n
-    response(request_format, client)
+    response(request_format, client, n)
   end
 
-  def response(request_format, client)
+  def response(request_format, client, n)
     response = "<pre>" + request_format.join("\n") + "</pre>"
     output = "<html><head></head><body>#{response}</body></html>"
 
@@ -17,7 +16,7 @@ class Response
               "server: ruby",
               "content-type: text/html; charset=iso-8859-1",
               "content-length: #{output.length}\r\n\r\n"].join("\r\n"),
-              "Hello, World! (#{@n += 1})"
+              "Hello, World! (#{n += 1})"
     client.puts headers
     client.puts output
   end
