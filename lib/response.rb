@@ -3,12 +3,23 @@ class Response
   def initialize(request_object, request_format, client, n)
     body = path_finder(request_object, n)
     response(request_format, client, body, n)
+    @client = client
+  end
+
+  def hello_world(n)
+    body = "Hello, World! (#{n})"
+  end
+
+  def shut_it_down(n)
+    body = "Total Requests: (#{n += 1})"
   end
 
   def path_finder(request_object, n)
     hash = request_object.request_lines_hash
     if hash["Path:"] == "/hello"
-      body = "Hello, World! (#{n += 1})"
+      hello_world(n)
+    elsif hash["Path:"] == "/shutdown"
+      shut_it_down(n)
     else
       body = ""
     end

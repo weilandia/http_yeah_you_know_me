@@ -10,7 +10,7 @@ class Server
   def initialize(port = 9292)
     @port = port
     @server = TCPServer.new(9292)
-    @total_requests = -1
+    @total_requests = 0
   end
 
   def request_response(server = @server)
