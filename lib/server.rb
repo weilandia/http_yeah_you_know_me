@@ -15,11 +15,8 @@ class Server
 
   def request_response(server = @server)
     while (client = server.accept)
-
       request_object = Request.new(client, @port)
-
-      request_format =  RequestFormatter.new(request_object).request_format
-
+      request_format = RequestFormatter.new(request_object).request_format
       Response.new(request_object, request_format, @total_requests)
       @total_requests += 1
       break if request_object.path == "/shutdown"

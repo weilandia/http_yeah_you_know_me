@@ -4,16 +4,11 @@ class Request
   def initialize(client, port)
     @client = client
     @port = port
-
     @request_lines = request(client)
-
     verb_path_protocol_string
-
     split_request_lines = split_remaining_request_lines(request_lines_without_verb_path_protocol)
-
     @request_lines_hash = hash_request_lines(split_request_lines)
-
-    # @request_format = request_format
+    puts "\e[35mREQUEST:\e[31m #{verb.inspect}\e[34m#{path.inspect}\e[33m#{protocol.inspect}"
   end
 
   def request_lines_without_verb_path_protocol
