@@ -11,16 +11,18 @@ class Server
   def initialize(port = 9292)
     @port = port
     @server = TCPServer.new(9292)
-    @n = -1
+    @total_requests = -1
   end
 
   def request_response(server = @server)
     while (client = server.accept)
 
-      request_format =  RequestFormatter.new(Request.new(client)).request_format
+      request_object = Request.new(client)
+      #returns formatted string
+      request_format =  RequestFormatter.new(request_object).request_format
 
-      Response.new(request_format, client, @n)
-      @n += 1
+      Response.new(request_object, request_format, client, @total_requests)
+      @total_requests += 1
     end
   end
 end
