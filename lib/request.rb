@@ -1,7 +1,9 @@
 class Request
-  attr_reader :verb, :path, :protocol, :request_lines_hash
+  attr_reader :verb, :path, :protocol, :port, :request_lines_hash
 
-  def initialize(client)
+  def initialize(client, port)
+    @port = port
+
     @request_lines = request(client)
 
     verb_path_protocol_string

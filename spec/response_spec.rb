@@ -12,7 +12,8 @@ class ResponseTest < Minitest::Test
   end
 
   def test_for_hello_world_in_the_body
-    body_split = @ping.body.split
+    ping = Hurley.get("http://127.0.0.1:9292/hello")
+    body_split = ping.body.split
     assert_equal "Hello, World!", body_split[0..1].join(' ')
   end
 
@@ -27,8 +28,9 @@ class ResponseTest < Minitest::Test
   end
 
   def test_the_server_increments_each_request
-    first_time = @ping.body.split[2].gsub(/[()]/, "").to_i
-    second_response = Hurley.get("http://127.0.0.1:9292")
+    ping = Hurley.get("http://127.0.0.1:9292/hello")
+    first_time = ping.body.split[2].gsub(/[()]/, "").to_i
+    second_response = Hurley.get("http://127.0.0.1:9292/hello")
     second_time = second_response.body.split[2].gsub(/[()]/, "").to_i
     assert_equal second_time, first_time + 1
   end

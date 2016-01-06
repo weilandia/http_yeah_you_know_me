@@ -14,7 +14,7 @@ class RequestFormatter
         "Path: #{request_lines_hash["Path:"]}",
         "Protocol: #{request_lines_hash["Protocol:"]}",
         "Host: #{request_lines_hash["Host:"].split(":")[0]}",
-        "Port: #{request_lines_hash["Host:"].split(":")[1]}",
+        "Port: #{@request.port}",
         "Origin: #{request_lines_hash["Host:"].split(":")[0]}",
         "Accept: #{request_lines_hash["Accept:"]}"]
       request_format

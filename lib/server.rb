@@ -4,7 +4,6 @@ require 'request'
 require 'request_formatter'
 require 'response'
 
-
 class Server
   attr_reader :port
 
@@ -17,7 +16,7 @@ class Server
   def request_response(server = @server)
     while (client = server.accept)
 
-      request_object = Request.new(client)
+      request_object = Request.new(client, @port)
       #returns formatted string
       request_format =  RequestFormatter.new(request_object).request_format
 
