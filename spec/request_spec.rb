@@ -38,14 +38,14 @@ class RequestTest < Minitest::Test
     assert_equal "en-US,en;q=0.8", request.request_lines_hash["Accept-Language:"]
   end
 
-  def test_return_correct_path_if_params
-    ping = Hurley.get("http://127.0.0.1:9292/hello?hi=true")
-    body_split = ping.body.split("\n")
-    assert_equal "Path: /hello", body_split[2]
+  def test_for_path_in_request_object
+    request = Request.new(MyParamClient.new, 9292)
+    assert_equal "/word_search", request.path
   end
 
-  def test_parse_of_param_value
-    ping = Hurley.get("http://127.0.0.1:9292/hello?hi=true")
-    require "pry"; binding.pry
+  def test_for_params_in_request_object
+    request = Request.new(MyParamClient.new, 9292)
+    assert_equal "word=hat",
+    request.params
   end
 end
