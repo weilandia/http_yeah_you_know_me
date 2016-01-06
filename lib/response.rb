@@ -7,11 +7,11 @@ class Response
   end
 
   def hello_world(n)
-    body = "Hello, World! (#{n})"
+    "Hello, World! (#{n})"
   end
 
   def shut_it_down(n)
-    body = "Total Requests: (#{n += 1})"
+    "Total Requests: (#{n})"
   end
 
   def path_finder(request_object, n)
@@ -21,7 +21,7 @@ class Response
     elsif hash["Path:"] == "/shutdown"
       shut_it_down(n)
     else
-      body = ""
+      ""
     end
   end
 

@@ -17,11 +17,14 @@ class Server
     while (client = server.accept)
 
       request_object = Request.new(client, @port)
-      #returns formatted string
+
       request_format =  RequestFormatter.new(request_object).request_format
 
       Response.new(request_object, request_format, client, @total_requests)
       @total_requests += 1
+      break if request_object.path == "/shutdown"
     end
+    client.close
+    puts "Total requests: #{@total_requests}"
   end
 end
