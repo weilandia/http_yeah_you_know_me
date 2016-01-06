@@ -37,4 +37,15 @@ class RequestTest < Minitest::Test
     request = Request.new(MyClient.new, 9292)
     assert_equal "en-US,en;q=0.8", request.request_lines_hash["Accept-Language:"]
   end
+
+  def test_return_correct_path_if_params
+    ping = Hurley.get("http://127.0.0.1:9292/hello?hi=true")
+    body_split = ping.body.split("\n")
+    assert_equal "Path: /hello", body_split[2]
+  end
+
+  def test_parse_of_param_value
+    ping = Hurley.get("http://127.0.0.1:9292/hello?hi=true")
+    require "pry"; binding.pry
+  end
 end

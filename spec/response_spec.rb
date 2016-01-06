@@ -64,4 +64,5 @@ class ResponseTest < Minitest::Test
     assert_equal "text/html; charset=iso-8859-1", @ping.header["Content-Type"]
   end
 
+
 end

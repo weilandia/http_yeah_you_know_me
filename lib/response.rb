@@ -1,5 +1,5 @@
 class Response
-
+  attr_reader :param
   def initialize(request_object, request_format, total_requests, hello_world_count)
     body = path_finder(request_object, total_requests, hello_world_count)
     response(request_format, request_object.client, body, total_requests)
@@ -19,11 +19,14 @@ class Response
 
   def path_finder(request_object, total_requests, hello_world_count)
     hash = request_object.request_lines_hash
-    if hash["Path:"] == "/hello"
+    if hash["Path:"].include? "?"
+      parse_parameters(hash["Path:"])
+    end
+    if hash["Path:"].include? "/hello"
       hello_world(hello_world_count)
-    elsif hash["Path:"] == "/shutdown"
+    elsif hash["Path:"].include? "/shutdown"
       shut_it_down(total_requests)
-    elsif hash["Path:"] == "/datetime"
+    elsif hash["Path:"].include? "/datetime"
       datetime
     else
       ""
@@ -43,4 +46,5 @@ class Response
     client.puts headers
     client.puts output
   end
+
 end
