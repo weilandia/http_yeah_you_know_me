@@ -4,33 +4,16 @@ require 'socket'
 require 'hurley'
 class IterartionZeroTest < Minitest::Test
 
-  attr_reader :response
+  attr_reader :ping
 
   def setup
-    @response = Hurley.get("http://127.0.0.1:9292")
+    @ping = Hurley.get("http://127.0.0.1:9292")
   end
 
-  def test_response_success
-    assert response.success?
-  end
 
-  def test_verb_format_in_request
-    response.body = response.body.gsub!(/(<[^>]*>)|\n|\t/s) {" "}
-    response_body = response.body.split
-    assert_equal "Verb: GET", response_body[3..4].join(' ')
-  end
 
-  def test_path_format_in_request
-    response.body = response.body.gsub!(/(<[^>]*>)|\n|\t/s) {" "}
-    response_body = response.body.split
-    assert_equal "Path: /", response_body[5..6].join(' ')
-  end
 
-  def test_protocol_format_in_request
-    response.body = response.body.gsub!(/(<[^>]*>)|\n|\t/s) {" "}
-    response_body = response.body.split
-    assert_equal "Protocol: HTTP/1.1", response_body[7..8].join(' ')
-  end
+  
 
   def test_url_is_correct
     url = response.request.url.to_s

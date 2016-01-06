@@ -2,11 +2,22 @@ require 'socket'
 require 'hurley'
 
 class Request
-  attr_reader :request_format
+  attr_reader :verb, :path, :protocol, :request_lines_hash
 
   def initialize(client)
-    request_format = request(client)
-    @request_format = request_format
+    @request_lines = request(client)
+
+    verb_path_protocol_string
+
+    split_request_lines = split_remaining_request_lines(request_lines_without_verb_path_protocol)
+
+    @request_lines_hash = hash_request_lines(split_request_lines)
+
+    # @request_format = request_format
+  end
+
+  def request_lines_without_verb_path_protocol
+    @request_lines[1..-1]
   end
 
   def request(client)
@@ -14,31 +25,30 @@ class Request
     while line = client.gets and !line.chomp.empty?
       request_lines << line.chomp
     end
+    request_lines
+  end
 
-    verb_path_protocol = request_lines.shift
+  def verb_path_protocol_string
+    verb_path_protocol = @request_lines[0]
+    @verb = verb_path_protocol.split[0]
+    @path = verb_path_protocol.split[1]
+    @protocol = verb_path_protocol.split[2]
+  end
 
-    verb = verb_path_protocol.split[0]
-    path = verb_path_protocol.split[1]
-    protocol = verb_path_protocol.split[2]
-
-
-    request_lines_hash = {}
-
+  def split_remaining_request_lines(request_lines)
     request_lines = request_lines.map do |line|
       line.split(" ", 2)
     end
+  end
 
+  def hash_request_lines(request_lines)
+    request_lines_hash = {}
+    request_lines_hash["Verb:"] = @verb
+    request_lines_hash["Path:"] = @path
+    request_lines_hash["Protocol:"] = @protocol
     request_lines = request_lines.map do |line|
       request_lines_hash[line[0]] = line[1]
     end
-
-    request_format = ["Verb: #{verb}",
-      "Path: #{path}",
-      "Protocol: #{protocol}",
-      "Host: #{request_lines_hash["Host:"].split(":")[0]}",
-      "Port: #{request_lines_hash["Host:"].split(":")[1]}",
-      "Origin: #{request_lines_hash["Host:"].split(":")[0]}",
-      "Accept: #{request_lines_hash["Accept:"]}"]
-    request_format
+    request_lines_hash
   end
 end
