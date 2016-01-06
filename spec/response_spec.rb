@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'socket'
 require 'hurley'
+require 'server'
+
 
 class ResponseTest < Minitest::Test
 
@@ -15,6 +17,25 @@ class ResponseTest < Minitest::Test
     ping = Hurley.get("http://127.0.0.1:9292/hello")
     body_split = ping.body.split
     assert_equal "Hello, World!", body_split[0..1].join(' ')
+  end
+
+  def test_for_datetime_in_the_body
+    ping = Hurley.get("http://127.0.0.1:9292/datetime")
+    body_split = ping.body.split(' ')
+    assert_equal "#{Time.now.strftime('%l:%M%p')} on #{Time.now.strftime('%A, %B%e, %Y')}".strip, body_split[0..5].join(' ')
+  end
+
+  def test_for_shut_it_down
+    ping = Hurley.get("http://127.0.0.1:9293")
+    assert ping.success?
+    ping = Hurley.get("http://127.0.0.1:9293/shutdown")
+    assert_equal "Total Requests: (1)", ping.body[0..18]
+    assert_raises(*"Connection refused") { Hurley.get("http://127.0.0.1:9293").success? }
+  end
+
+  def test_for_no_body_with_no_path
+    ping = Hurley.get("http://127.0.0.1:9292")
+    assert_equal "<html><head></head><body><pre>Verb:", ping.body.split(' ')[0]
   end
 
   def test_url_is_correct
@@ -42,4 +63,5 @@ class ResponseTest < Minitest::Test
   def test_content_type
     assert_equal "text/html; charset=iso-8859-1", @ping.header["Content-Type"]
   end
+
 end
