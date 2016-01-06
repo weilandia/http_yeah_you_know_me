@@ -1,6 +1,3 @@
-require 'socket'
-require 'hurley'
-
 class Request
   attr_reader :verb, :path, :protocol, :request_lines_hash
 

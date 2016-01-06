@@ -11,6 +11,6 @@ class ServerTest < Minitest::Test
   end
 
   def test_request_success
-    assert ping.success?
+    assert @ping.success?
   end
 end

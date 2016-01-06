@@ -1,4 +1,4 @@
-require_relative 'request'
+require 'request'
 
 class RequestFormatter
   attr_reader :request_lines_hash

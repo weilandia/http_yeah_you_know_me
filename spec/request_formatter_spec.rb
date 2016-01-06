@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative 'test_helper'
-require_relative '../lib/request'
-require_relative '../lib/request_formatter'
+require 'test_helper'
+require 'request'
+require 'request_formatter'
 
 class RequestFormatterTest < Minitest::Test
 

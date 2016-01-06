@@ -1,4 +1,3 @@
-$LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require 'socket'
 require 'hurley'
 require 'request'
@@ -25,6 +24,3 @@ class Server
     end
   end
 end
-
-server = Server.new
-server.request_response

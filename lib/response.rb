@@ -1,6 +1,3 @@
-require 'socket'
-require 'hurley'
-
 class Response
 
   def initialize(request_format, client, n)

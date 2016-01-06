@@ -2,8 +2,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'socket'
 require 'hurley'
-require_relative '../lib/request'
-require_relative 'test_helper'
+require 'request'
+require 'test_helper'
 
 class RequestTest < Minitest::Test
 
@@ -32,7 +32,6 @@ class RequestTest < Minitest::Test
   def test_hash_is_created
     request = Request.new(MyClient.new)
     request_hash = request.hash_request_lines(request.request_lines_without_verb_path_protocol)
-    require "pry"; binding.pry
     assert_equal Hash, request_hash.class
   end
 
