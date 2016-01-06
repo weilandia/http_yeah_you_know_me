@@ -1,24 +1,30 @@
 class Response
 
-  def initialize(request_object, request_format, n)
-    body = path_finder(request_object, n)
-    response(request_format, request_object.client, body, n)
+  def initialize(request_object, request_format, total_requests, hello_world_count)
+    body = path_finder(request_object, total_requests, hello_world_count)
+    response(request_format, request_object.client, body, total_requests)
   end
 
-  def hello_world(n)
-    "Hello, World! (#{n})"
+  def hello_world(hello_world_count)
+    "Hello, World! (#{hello_world_count})"
   end
 
-  def shut_it_down(n)
-    "Total Requests: (#{n})"
+  def shut_it_down(total_requests)
+    "Total Requests: (#{total_requests})"
   end
 
-  def path_finder(request_object, n)
+  def datetime
+    "#{Time.now.strftime('%l:%M%p')} on  #{Time.now.strftime('%A, %B %e, %Y')}"
+  end
+
+  def path_finder(request_object, total_requests, hello_world_count)
     hash = request_object.request_lines_hash
     if hash["Path:"] == "/hello"
-      hello_world(n)
+      hello_world(hello_world_count)
     elsif hash["Path:"] == "/shutdown"
-      shut_it_down(n)
+      shut_it_down(total_requests)
+    elsif hash["Path:"] == "/datetime"
+      datetime
     else
       ""
     end
