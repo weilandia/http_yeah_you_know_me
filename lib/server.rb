@@ -20,11 +20,11 @@ class Server
 
       request_format =  RequestFormatter.new(request_object).request_format
 
-      Response.new(request_object, request_format, client, @total_requests)
+      Response.new(request_object, request_format, @total_requests)
       @total_requests += 1
       break if request_object.path == "/shutdown"
     end
     client.close
-    puts "Total requests: #{@total_requests}"
+    puts "Total requests: #{@total_requests - 1}"
   end
 end

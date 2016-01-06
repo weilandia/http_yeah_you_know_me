@@ -1,9 +1,8 @@
 class Response
 
-  def initialize(request_object, request_format, client, n)
+  def initialize(request_object, request_format, n)
     body = path_finder(request_object, n)
-    response(request_format, client, body, n)
-    @client = client
+    response(request_format, request_object.client, body, n)
   end
 
   def hello_world(n)

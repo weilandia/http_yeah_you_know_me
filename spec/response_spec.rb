@@ -13,7 +13,6 @@ class ResponseTest < Minitest::Test
 
   def test_for_hello_world_in_the_body
     ping = Hurley.get("http://127.0.0.1:9292/hello")
-    require "pry"; binding.pry
     body_split = ping.body.split
     assert_equal "Hello, World!", body_split[0..1].join(' ')
   end
