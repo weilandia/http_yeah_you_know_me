@@ -1,22 +1,21 @@
 require 'request'
 
 class RequestFormatter
-  attr_reader :request_lines_hash
-
-  def initialize(request)
-    @request = request
+  attr_reader :diagnostics
+  
+  def initialize(request_lines_hash, port)
+    @port = port
+    @diagnostics = diagnostic_format(request_lines_hash, port)
   end
 
-  def request_format
-    request_lines_hash = @request.request_lines_hash
-
-    request_format = ["Verb: #{request_lines_hash["Verb:"]}",
+  def diagnostic_format(request_lines_hash, port)
+    diagnostic_format = ["Verb: #{request_lines_hash["Verb:"]}",
         "Path: #{request_lines_hash["Path:"]}",
         "Protocol: #{request_lines_hash["Protocol:"]}",
         "Host: #{request_lines_hash["Host:"].split(":")[0]}",
-        "Port: #{@request.port}",
+        "Port: #{port}",
         "Origin: #{request_lines_hash["Host:"].split(":")[0]}",
         "Accept: #{request_lines_hash["Accept:"]}"]
-      request_format
+      diagnostic_format
   end
 end

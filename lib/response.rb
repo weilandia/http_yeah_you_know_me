@@ -1,8 +1,8 @@
 class Response
   attr_reader :param
-  def initialize(request_object, total_requests, hello_world_count)
+  def initialize(request_object, port, total_requests, hello_world_count)
     body = path_finder(request_object, total_requests, hello_world_count)
-    response(request_object, body)
+    response(request_object, port, body)
   end
 
   def hello_world(hello_world_count)
@@ -18,11 +18,15 @@ class Response
   end
 
   def word_search(request_object)
-    word = request_object.param_value.downcase
-    if File.read("/usr/share/dict/words").include? "#{word}"
-      "#{word.upcase} is a known word"
+    if request_object.param_value == nil
+      return ""
     else
-      "#{word.upcase} is not a known word"
+      word = request_object.param_value.downcase
+      if File.read("/usr/share/dict/words").include? "#{word}"
+        "#{word.upcase} is a known word"
+      else
+        "#{word.upcase} is not a known word"
+      end
     end
   end
 
@@ -41,8 +45,8 @@ class Response
     end
   end
 
-  def response(request_object, body)
-    request_format = RequestFormatter.new(request_object).request_format
+  def response(request_object, port, body)
+    request_format = RequestFormatter.new(request_object.request_lines_hash, port).diagnostics
     response = "<pre>" + request_format.join("\n") + "</pre>"
     output = "<html><head></head><body>#{response}</body></html>"
 

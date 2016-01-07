@@ -10,12 +10,12 @@ class Server
     @server = TCPServer.new(port)
   end
 
-  def request_response(server = @server)
+  def request_response(server = @server, port = @port)
     total_requests = 0
     hello_world_count = 0
     while (client = server.accept)
-      request_object = Request.new(client, @port)
-      Response.new(request_object, total_requests, hello_world_count)
+      request_object = Request.new(client)
+      Response.new(request_object, port, total_requests, hello_world_count)
       total_requests += 1
       if request_object.path == "/hello"
         hello_world_count += 1
