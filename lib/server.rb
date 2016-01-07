@@ -17,8 +17,8 @@ class Server
   def request_response(server = @server)
     while (client = server.accept)
       request_object = Request.new(client, @port)
-      request_format = RequestFormatter.new(request_object).request_format
-      Response.new(request_object, request_format, @total_requests, @hello_world_count)
+      # request_format = RequestFormatter.new(request_object).request_format
+      Response.new(request_object, @total_requests, @hello_world_count)
       @total_requests += 1
       if request_object.path == "/hello"
         @hello_world_count += 1

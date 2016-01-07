@@ -1,8 +1,8 @@
 class Response
   attr_reader :param
-  def initialize(request_object, request_format, total_requests, hello_world_count)
+  def initialize(request_object, total_requests, hello_world_count)
     body = path_finder(request_object, total_requests, hello_world_count)
-    response(request_format, request_object.client, body, total_requests)
+    response(request_object, body)
   end
 
   def hello_world(hello_world_count)
@@ -41,7 +41,8 @@ class Response
     end
   end
 
-  def response(request_format, client, body, n)
+  def response(request_object, body)
+    request_format = RequestFormatter.new(request_object).request_format
     response = "<pre>" + request_format.join("\n") + "</pre>"
     output = "<html><head></head><body>#{response}</body></html>"
 
@@ -51,8 +52,8 @@ class Response
               "content-type: text/html; charset=iso-8859-1",
               "content-length: #{output.length}\r\n\r\n"].join("\r\n"),
               "#{body}"
-    client.puts headers
-    client.puts output
+    request_object.client.puts headers
+    request_object.client.puts output
   end
 
 end
