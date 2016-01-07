@@ -17,10 +17,10 @@ class Server
       request_object = Request.new(client)
       Response.new(request_object, port, total_requests, hello_world_count)
       total_requests += 1
-      if request_object.path == "/hello"
+      if request_object.request_lines_hash["Path:"] == "/hello"
         hello_world_count += 1
       end
-      break if request_object.path == "/shutdown"
+      break if request_object.request_lines_hash["Path:"] == "/shutdown"
     end
     puts "Total requests: #{total_requests - 1}"
     client.close

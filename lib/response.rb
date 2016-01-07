@@ -1,3 +1,4 @@
+
 class Response
   attr_reader :param
   def initialize(request_object, port, total_requests, hello_world_count)
@@ -18,15 +19,11 @@ class Response
   end
 
   def word_search(request_object)
-    if request_object.param_value == nil
-      ""
+    word = request_object.request_lines_hash["Param_value:"].downcase
+    if File.read("/usr/share/dict/words").include? "#{word}"
+      "#{word.upcase} is a known word"
     else
-      word = request_object.param_value.downcase
-      if File.read("/usr/share/dict/words").include? "#{word}"
-        "#{word.upcase} is a known word"
-      else
-        "#{word.upcase} is not a known word"
-      end
+      "#{word.upcase} is not a known word"
     end
   end
 
