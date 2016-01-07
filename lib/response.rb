@@ -19,7 +19,7 @@ class Response
 
   def word_search(request_object)
     if request_object.param_value == nil
-      return ""
+      ""
     else
       word = request_object.param_value.downcase
       if File.read("/usr/share/dict/words").include? "#{word}"
