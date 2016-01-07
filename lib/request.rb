@@ -1,5 +1,5 @@
 class Request
-  attr_reader :verb, :path, :protocol, :port, :request_lines_hash, :client, :params
+  attr_reader :verb, :path, :protocol, :port, :request_lines_hash, :client, :params, :param_value
 
   def initialize(client, port)
     @client = client
@@ -29,6 +29,10 @@ class Request
     @path = verb_path_protocol.split[1].split("?")[0]
     @params = verb_path_protocol.split[1].split("?")[1]
     @protocol = verb_path_protocol.split[2]
+  end
+  
+  def param_value
+    @params.split("=")[1]
   end
 
   def split_remaining_request_lines(request_lines)

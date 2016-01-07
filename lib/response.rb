@@ -17,8 +17,13 @@ class Response
     "#{Time.now.strftime('%l:%M%p')} on  #{Time.now.strftime('%A, %B %e, %Y')}"
   end
 
-  def word_search
-    "Yes or no"
+  def word_search(request_object)
+    word = request_object.param_value.downcase
+    if File.read("/usr/share/dict/words").include? "#{word}"
+      "#{word.upcase} is a known word"
+    else
+      "#{word.upcase} is not a known word"
+    end
   end
 
   def path_finder(request_object, total_requests, hello_world_count)
@@ -30,7 +35,7 @@ class Response
     elsif hash["Path:"] == "/datetime"
       datetime
     elsif hash["Path:"] == "/word_search"
-      "Yes or no"
+      word_search(request_object)
     else
       ""
     end

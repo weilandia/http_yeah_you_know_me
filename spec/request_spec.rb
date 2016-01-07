@@ -48,4 +48,11 @@ class RequestTest < Minitest::Test
     assert_equal "word=hat",
     request.params
   end
+
+  def test_for_param_value_in_request_object
+    request = Request.new(MyParamClient.new, 9292)
+    assert_equal "hat",
+    request.param_value
+  end
+
 end
