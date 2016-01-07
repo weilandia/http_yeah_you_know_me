@@ -47,7 +47,7 @@ class Response
   end
 
   def response(request_object, port, body)
-    request_format = RequestFormatter.new(request_object.request_lines_hash, port).diagnostics
+    request_format = DiagnosticsFormatter.new(request_object.request_lines_hash, port).diagnostics
     response = "<pre>" + request_format.join("\n") + "</pre>"
     output = "<html><head></head><body>#{response}</body></html>"
 

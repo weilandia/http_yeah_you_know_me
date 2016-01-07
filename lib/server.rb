@@ -1,7 +1,7 @@
 require 'socket'
 require 'hurley'
 require 'request'
-require 'request_formatter'
+require 'diagnostics_formatter'
 require 'response'
 
 class Server

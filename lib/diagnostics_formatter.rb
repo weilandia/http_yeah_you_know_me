@@ -1,8 +1,8 @@
 require 'request'
 
-class RequestFormatter
+class DiagnosticsFormatter
   attr_reader :diagnostics
-  
+
   def initialize(request_lines_hash, port)
     @port = port
     @diagnostics = diagnostic_format(request_lines_hash, port)
