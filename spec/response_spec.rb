@@ -38,6 +38,12 @@ class ResponseTest < Minitest::Test
     assert_equal "<html><head></head><body><pre>Verb:", ping.body.split(' ')[0]
   end
 
+  def test_for_definition_in_the_body
+    ping = Hurley.get("http://127.0.0.1:9292/word_search?word=dog")
+    body_split = ping.body.split
+    assert_equal "Yes or no", body_split[0..2].join(' ')
+  end
+
   def test_url_is_correct
     url = @ping.request.url.to_s
     assert_equal "http://127.0.0.1:9292", url
@@ -63,6 +69,4 @@ class ResponseTest < Minitest::Test
   def test_content_type
     assert_equal "text/html; charset=iso-8859-1", @ping.header["Content-Type"]
   end
-
-
 end

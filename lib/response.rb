@@ -17,17 +17,20 @@ class Response
     "#{Time.now.strftime('%l:%M%p')} on  #{Time.now.strftime('%A, %B %e, %Y')}"
   end
 
+  def word_search
+    "Yes or no"
+  end
+
   def path_finder(request_object, total_requests, hello_world_count)
     hash = request_object.request_lines_hash
-    if hash["Path:"].include? "?"
-      parse_parameters(hash["Path:"])
-    end
-    if hash["Path:"].include? "/hello"
+    if hash["Path:"] == "/hello"
       hello_world(hello_world_count)
-    elsif hash["Path:"].include? "/shutdown"
+    elsif hash["Path:"] == "/shutdown"
       shut_it_down(total_requests)
-    elsif hash["Path:"].include? "/datetime"
+    elsif hash["Path:"] == "/datetime"
       datetime
+    elsif hash["Path:"] == "/word_search"
+      "Yes or no"
     else
       ""
     end
