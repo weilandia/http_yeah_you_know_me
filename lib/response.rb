@@ -19,11 +19,15 @@ class Response
   end
 
   def word_search(request_object)
-    word = request_object.request_lines_hash["Param_value:"].downcase
-    if File.read("/usr/share/dict/words").include? "#{word}"
-      "#{word.upcase} is a known word"
+    if request_object.request_lines_hash["Param_value:"] == nil
+      ""
     else
-      "#{word.upcase} is not a known word"
+      word = request_object.request_lines_hash["Param_value:"].downcase
+      if File.read("/usr/share/dict/words").include? "#{word}"
+        "#{word.upcase} is a known word"
+      else
+        "#{word.upcase} is not a known word"
+      end
     end
   end
 
