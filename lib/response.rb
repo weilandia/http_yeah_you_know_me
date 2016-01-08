@@ -39,7 +39,11 @@ class Response
 
   def guess(request_object)
     params = request_object.request_lines_hash["Guess:"]
-    guess = params.split("=")[1]
+    if params == nil
+      guess = "0"
+    else
+      guess = params.split("=")[1]
+    end
   end
 
   def path_finder(request_object, total_requests, hello_world_count)
