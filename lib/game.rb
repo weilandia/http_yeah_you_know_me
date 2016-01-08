@@ -37,15 +37,19 @@ class Game
     <input type='Submit'></input></form>"
   end
 
+  def too_low
+    "it was too LOW.\nGuess again! #{
+    guess_input_form}"
+  end
+
+  def too_high
+    "it was too HIGH.\nGuess again!#{
+    guess_input_form}"
+  end
+
   def high_low
-    if last_guess == @answer
-      win
-    elsif last_guess < @answer
-      "it was too LOW.\nGuess again! #{
-      guess_input_form}"
-    elsif last_guess > @answer
-      "it was too HIGH.\nGuess again!#{
-      guess_input_form}"
-    end
+    if last_guess == @answer then win
+    elsif last_guess < @answer then too_low
+    else too_high end
   end
 end

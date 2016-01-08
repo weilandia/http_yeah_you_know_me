@@ -20,7 +20,6 @@ class Server
       if request_object.request_lines_hash["Path:"] == "/hello"
         hello_world_count += 1
       end
-      
       break if request_object.request_lines_hash["Path:"] == "/shutdown"
     end
     puts "Total requests: #{total_requests - 1}"

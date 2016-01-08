@@ -21,8 +21,7 @@ class Response
   end
 
   def word_search(request_object)
-    if request_object.request_lines_hash["Param_value:"] == nil
-      ""
+    if request_object.request_lines_hash["Param_value:"] == nil then ""
     else
       word = request_object.request_lines_hash["Param_value:"].downcase
       if File.read("/usr/share/dict/words").include? "#{word}"
@@ -39,11 +38,8 @@ class Response
 
   def guess(request_object)
     params = request_object.request_lines_hash["Guess:"]
-    if params == nil
-      guess = "0"
-    else
-      guess = params.split("=")[1]
-    end
+    if params == nil then guess = "0"
+    else guess = params.split("=")[1] end
   end
 
   def new_game_message
