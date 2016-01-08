@@ -54,10 +54,13 @@ class Response
     elsif hash["Path:"] == "/shutdown" then shut_it_down(total_requests)
     elsif hash["Path:"] == "/datetime" then datetime
     elsif hash["Path:"] == "/word_search" then word_search(request_object)
-    elsif hash["Path:"] == "/new_game" then new_game_message
+    elsif hash["Path:"] == "/new_game"
+      new_game_message
     elsif hash["Path:"] == "/start_game" then start_game && $game.start
     elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.game_path
     elsif hash["Path:"] == "/" then ""
+    elsif hash["Path:"] == "/force_error"
+      @request_code = "500 Internal Server Error"
     else @request_code = "404 Not Found" end
   end
 
