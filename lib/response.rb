@@ -55,7 +55,7 @@ class Response
     elsif hash["Path:"] == "/word_search" then word_search(request_object)
     elsif hash["Path:"] == "/new_game" then new_game_message
     elsif hash["Path:"] == "/start_game" then start_game && $game.start
-    elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.game_path
+    elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.next_guess
     else "" end
   end
 

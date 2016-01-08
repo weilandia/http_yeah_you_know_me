@@ -1,5 +1,6 @@
 class Game
-  attr_reader :guess, :answer, :guess_counter
+  attr_reader :guess, :guess_counter
+  attr_writer :answer
 
   def initialize
     @answer = rand(1..9)
@@ -22,7 +23,7 @@ class Game
     <input type='Submit'></input></form></p>"
   end
 
-  def game_path
+  def next_guess
     "<p>Total guesses: #{guess_counter}</p><p>Your last guess was #{last_guess} and #{high_low}"
   end
 
@@ -49,7 +50,7 @@ class Game
   end
 
   def guess_too_high
-    "it was too HIGH.\nGuess again!#{
+    "it was too HIGH.\nGuess again! #{
     guess_input_form}"
   end
 end
