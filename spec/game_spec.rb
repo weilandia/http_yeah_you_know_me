@@ -53,7 +53,8 @@ class GameTest < Minitest::Test
     game.guess_tracker(5)
     game.answer = 5
     assert_equal "it was the right number! You Win!<p><form action='/start_game' method='post'>
-    <input type='Submit' value = 'Start New Game?'></input></form></p>", game.high_low
+    <input type='Submit' value = 'Start New Game?'></input></form></p><p><form action='/shutdown' method='post'>
+    <input type='Submit' value = 'Shutdown?'></input></form></p>", game.high_low
   end
 
   def test_guess_too_low
@@ -75,4 +76,5 @@ Guess again! </p><form action='/game' method='post'>
     <input type='textarea' name='guess'></input>
     <input type='Submit'></input></form>", game.high_low
   end
+
 end

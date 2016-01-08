@@ -11,6 +11,7 @@ class ResponseTest < Minitest::Test
 
   def setup
     @ping = Hurley.get("http://127.0.0.1:9292")
+    @post_ping = Hurley.post("http://127.0.0.1:9292/start_game")
   end
 
   def test_for_hello_world_in_the_body
@@ -32,7 +33,7 @@ class ResponseTest < Minitest::Test
     assert_equal "Total Requests: (1)", ping.body[0..18]
     assert_raises(*"Connection refused") { Hurley.get("http://127.0.0.1:9293").success? }
   end
-
+  #
   def test_for_no_body_with_no_path
     ping = Hurley.get("http://127.0.0.1:9292")
     assert_equal "<pre>Verb: GET", ping.body.split("\n")[0]
@@ -56,9 +57,26 @@ class ResponseTest < Minitest::Test
     assert_equal "http://127.0.0.1:9292", url
   end
 
-  def test_verb_is_correct
+  def test_get_verb_is_correct
     verb = @ping.request.verb
     assert_equal :get, verb
+  end
+
+  def test_post_verb_is_correct
+    verb = @post_ping.request.verb
+    assert_equal :post, verb
+  end
+
+  def test_500_response_code
+    ping = Hurley.get("http://127.0.0.1:9292/force_error")
+    body_split = ping.body.split("<")[0]
+    assert_equal "500 Internal Server Error", body_split
+  end
+
+  def test_error_response_code
+    ping = Hurley.get("http://127.0.0.1:9292/asdf")
+    body_split = ping.body.split("<")[0]
+    assert_equal "404 Not Found", body_split
   end
 
   def test_the_server_increments_each_request

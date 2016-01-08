@@ -41,7 +41,8 @@ class Game
 
   def guess_win
     "it was the right number! You Win!<p><form action='/start_game' method='post'>
-    <input type='Submit' value = 'Start New Game?'></input></form></p>"
+    <input type='Submit' value = 'Start New Game?'></input></form></p><p><form action='/shutdown' method='post'>
+    <input type='Submit' value = 'Shutdown?'></input></form></p>"
   end
 
   def guess_too_low
