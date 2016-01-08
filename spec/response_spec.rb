@@ -21,8 +21,8 @@ class ResponseTest < Minitest::Test
 
   def test_for_datetime_in_the_body
     ping = Hurley.get("http://127.0.0.1:9292/datetime")
-    body_split = ping.body.split(' ')
-    assert_equal "#{Time.now.strftime('%l:%M%p')} on #{Time.now.strftime('%A, %B%e, %Y')}".strip, body_split[0..5].join(' ')
+    body_split = ping.body.split('<')
+    assert_equal "#{Time.now.strftime('%l:%M%p')} on  #{Time.now.strftime('%A, %B %e, %Y')}", body_split[0]
   end
 
   def test_for_shut_it_down
@@ -35,19 +35,19 @@ class ResponseTest < Minitest::Test
 
   def test_for_no_body_with_no_path
     ping = Hurley.get("http://127.0.0.1:9292")
-    assert_equal "<html><head></head><body><pre>Verb:", ping.body.split(' ')[0]
+    assert_equal "<pre>Verb: GET", ping.body.split("\n")[0]
   end
 
   def test_for_a_known_word
     ping = Hurley.get("http://127.0.0.1:9292/word_search?word=dog")
-    body_split = ping.body.split
-    assert_equal "DOG is a known word", body_split[0..4].join(' ')
+    body_split = ping.body.split("<")
+    assert_equal "DOG is a known word", body_split[0]
   end
 
   def test_for_a_unknown_word
     ping = Hurley.get("http://127.0.0.1:9292/word_search?word=asdlfk")
-    body_split = ping.body.split
-    assert_equal "ASDLFK is not a known word", body_split[0..5].join(' ')
+    body_split = ping.body.split("<")
+    assert_equal "ASDLFK is not a known word", body_split[0]
   end
 
 

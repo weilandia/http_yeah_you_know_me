@@ -4,6 +4,7 @@ class Response
   def initialize(request_object, port, total_requests, hello_world_count)
     body = path_finder(request_object, total_requests, hello_world_count)
     response(request_object, port, body)
+    puts "\e[35mBODY:\e[32m#{body.inspect}"
   end
 
   def hello_world(hello_world_count)
@@ -41,6 +42,18 @@ class Response
       datetime
     elsif hash["Path:"] == "/word_search"
       word_search(request_object)
+    elsif hash["Path:"] == "/new_game"
+      "Good Luck!\n<form action='/game' method='post'>
+      <input type='Submit' value = 'Start Game!'></input></form>"
+      #Game.new
+    elsif hash["Path:"] == "/game"
+      "Guess again!!\n<form action='/game' method='post'>
+      <input type='textarea' name='guess'></input>
+      <input type='Submit'></input></form>"
+      #method that will check the verb
+      #if verb == post then take param and compare to answer in Game object
+      #if verb == get puts some shit to the screen that queries guess.length
+      #have something to prevent bug if no game object exists
     else
       ""
     end
@@ -48,17 +61,16 @@ class Response
 
   def response(request_object, port, body)
     request_format = DiagnosticsFormatter.new(request_object.request_lines_hash, port).diagnostics
-    response = "<pre>" + request_format.join("\n") + "</pre>"
-    output = "<html><head></head><body>#{response}</body></html>"
+    diagnostics = request_format.join("\n")
+    body_with_diagnostics = body + diagnostics
 
     headers = ["http/1.1 200 ok",
               "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
               "server: ruby",
               "content-type: text/html; charset=iso-8859-1",
-              "content-length: #{output.length}\r\n\r\n"].join("\r\n"),
-              "#{body}"
+              "content-length: #{body_with_diagnostics.length}\r\n\r\n"].join("\r\n"),
+              "#{body_with_diagnostics}"
     request_object.client.puts headers
-    request_object.client.puts output
   end
 
 end

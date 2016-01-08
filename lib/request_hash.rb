@@ -3,7 +3,7 @@ class RequestHash
   def initialize(request_lines)
     @request_lines = request_lines
     @hash = hash_request_lines(request_lines[1..-1])
-    puts "\e[35mREQUEST:\e[31m #{verb.inspect}\e[34m#{path.inspect}\e[33m#{protocol.inspect}"
+    puts "\e[35mREQUEST:\e[31m #{verb.inspect}\e[34m#{path.inspect}\e[33m#{protocol.inspect}\e\n[32mParameters = #{params.inspect}\nHost = #{hash["Host:"].inspect}\nAccept = #{hash["Accept:"].inspect}"
   end
 
   def hash_request_lines(request_lines)

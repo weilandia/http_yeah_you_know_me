@@ -15,7 +15,7 @@ class DiagnosticsFormatterTest < Minitest::Test
   def test_verb_format
     request = Request.new(MyClient.new)
     formatter = DiagnosticsFormatter.new(request.request_lines_hash, 9292)
-    assert_equal "Verb: GET", formatter.diagnostics[0]
+    assert_equal "<pre>Verb: GET", formatter.diagnostics[0]
   end
 
   def test_path_format
@@ -57,6 +57,6 @@ class DiagnosticsFormatterTest < Minitest::Test
   def test_accept_format
     request = Request.new(MyClient.new)
     formatter = DiagnosticsFormatter.new(request.request_lines_hash, 9292)
-    assert_equal "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8", formatter.diagnostics[6]
+    assert_equal "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</pre>", formatter.diagnostics[6]
   end
 end
