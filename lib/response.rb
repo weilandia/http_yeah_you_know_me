@@ -46,29 +46,21 @@ class Response
     end
   end
 
+  def new_game_message
+    "Good luck!<p><form action='/start_game' method='post'>
+    <input type='Submit' value = 'Start Game!'></input></form></p>"
+  end
+
   def path_finder(request_object, total_requests, hello_world_count)
     hash = request_object.request_lines_hash
-    if hash["Path:"] == "/hello"
-      hello_world(hello_world_count)
-    elsif hash["Path:"] == "/shutdown"
-      shut_it_down(total_requests)
-    elsif hash["Path:"] == "/datetime"
-      datetime
-    elsif hash["Path:"] == "/word_search"
-      word_search(request_object)
-    elsif hash["Path:"] == "/new_game"
-      "Good luck!<p><form action='/start_game' method='post'>
-      <input type='Submit' value = 'Start Game!'></input></form></p>"
-    elsif hash["Path:"] == "/start_game"
-      start_game
-      $game.start
-    elsif hash["Path:"] == "/game"
-      guess = guess(request_object)
-      $game.guess_tracker(guess)
-      $game.game_path
-    else
-      ""
-    end
+    if hash["Path:"] == "/hello" then hello_world(hello_world_count)
+    elsif hash["Path:"] == "/shutdown" then shut_it_down(total_requests)
+    elsif hash["Path:"] == "/datetime" then datetime
+    elsif hash["Path:"] == "/word_search" then word_search(request_object)
+    elsif hash["Path:"] == "/new_game" then new_game_message
+    elsif hash["Path:"] == "/start_game" then start_game && $game.start
+    elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.game_path
+    else "" end
   end
 
   def response(request_object, port, body)
