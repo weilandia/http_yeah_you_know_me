@@ -57,19 +57,11 @@ class Response
       <input type='Submit' value = 'Start Game!'></input></form></p>"
     elsif hash["Path:"] == "/start_game"
       start_game
-      # if @game.exist?
-      #   # redirect!!!
-      # else
-        "Guess a number between 1 and 10:<p><form action='/game' method='post'>
-        <input type='textarea' name='guess'></input>
-        <input type='Submit'></input></form></p>"
-      # end
+      $game.start
     elsif hash["Path:"] == "/game"
       guess = guess(request_object)
       $game.guess_tracker(guess)
-      "<p>Total guesses so far: #{$game.guess_counter}</p><p>Your last guess was #{$game.last_guess} and #{$game.high_low}</p><form action='/game' method='post'>
-      <input type='textarea' name='guess'></input>
-      <input type='Submit'></input></form>"
+      $game.game_path
     else
       ""
     end
