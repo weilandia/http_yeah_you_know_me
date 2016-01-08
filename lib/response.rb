@@ -1,10 +1,11 @@
 require 'game'
 
 class Response
-  attr_reader :param
+  attr_reader :param, :request_code
   def initialize(request_object, port, total_requests, hello_world_count)
     body = path_finder(request_object, total_requests, hello_world_count)
     response(request_object, port, body)
+    @request_code = "200 ok"
     puts "\e[35mBODY:\e[32m#{body.inspect}"
   end
 
@@ -55,8 +56,16 @@ class Response
     elsif hash["Path:"] == "/word_search" then word_search(request_object)
     elsif hash["Path:"] == "/new_game" then new_game_message
     elsif hash["Path:"] == "/start_game" then start_game && $game.start
+<<<<<<< HEAD
     elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.next_guess
     else "" end
+=======
+    elsif hash["Path:"] == "/game" then $game.guess_tracker(guess(request_object)) && $game.game_path
+    elsif hash["Path:"] == "/" then ""
+    elsif hash["Path:"] == "/force_error"
+      @request_code = "500 Internal Server Error"
+    else @request_code = "404 Not Found" end
+>>>>>>> 783a8daf0c85794b0c292f80ab268f1733eab050
   end
 
   def response(request_object, port, body)

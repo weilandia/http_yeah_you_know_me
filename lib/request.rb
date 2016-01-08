@@ -1,6 +1,7 @@
 require 'request_hash'
 class Request
-  attr_reader :request_lines, :request_lines_hash, :client
+  attr_reader :request_lines, :client
+  attr_accessor :request_lines_hash
 
   def initialize(client)
     @client = client
