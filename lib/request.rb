@@ -1,6 +1,6 @@
 require 'request_hash'
 class Request
-  attr_reader :request_lines_hash, :client
+  attr_reader :request_lines, :request_lines_hash, :client
 
   def initialize(client)
     @client = client
@@ -11,16 +11,9 @@ class Request
   def request(client)
     request_lines = []
 
-    # READ HEADERS
     while line = client.gets and !line.chomp.empty?
       request_lines << line.chomp
     end
-
-    # READ BODY
-    # look at headers we read so far
-    # determine content length
-    # read that # of characters from
-    # the client
 
     content_length_header = request_lines.find do |lines|
       lines.start_with?("Content-Length")
@@ -33,8 +26,6 @@ class Request
         request_lines << body
       end
     end
-
-    #content_length_header.do_stuff...
     request_lines
   end
 end

@@ -14,6 +14,7 @@ class RequestHash
     request_lines_hash["Protocol:"] = protocol
     request_lines_hash["Params:"] = params
     request_lines_hash["Param_value:"] = param_value
+    request_lines_hash["Guess:"] = guess_expression
     request_lines = request_lines.map do |line|
       request_lines_hash[line[0]] = line[1]
     end
@@ -24,6 +25,14 @@ class RequestHash
     request_lines = request_lines.map do |line|
       line.split(" ", 2)
     end
+  end
+
+  def guess_expression
+    @request_lines.join[/guess=\d/]
+  end
+
+  def guess
+    body.split("=")[1]
   end
 
   def verb

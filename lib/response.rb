@@ -1,3 +1,4 @@
+require 'game'
 
 class Response
   attr_reader :param
@@ -32,6 +33,15 @@ class Response
     end
   end
 
+  def start_game
+    $game = Game.new
+  end
+
+  def guess(request_object)
+    params = request_object.request_lines_hash["Guess:"]
+    guess = params.split("=")[1]
+  end
+
   def path_finder(request_object, total_requests, hello_world_count)
     hash = request_object.request_lines_hash
     if hash["Path:"] == "/hello"
@@ -43,17 +53,23 @@ class Response
     elsif hash["Path:"] == "/word_search"
       word_search(request_object)
     elsif hash["Path:"] == "/new_game"
-      "Good Luck!\n<form action='/game' method='post'>
-      <input type='Submit' value = 'Start Game!'></input></form>"
-      #Game.new
+      "Good luck!<p><form action='/start_game' method='post'>
+      <input type='Submit' value = 'Start Game!'></input></form></p>"
+    elsif hash["Path:"] == "/start_game"
+      start_game
+      # if @game.exist?
+      #   # redirect!!!
+      # else
+        "Guess a number between 1 and 10:<p><form action='/game' method='post'>
+        <input type='textarea' name='guess'></input>
+        <input type='Submit'></input></form></p>"
+      # end
     elsif hash["Path:"] == "/game"
-      "Guess again!!\n<form action='/game' method='post'>
+      guess = guess(request_object)
+      $game.guess_tracker(guess)
+      "<p>Total guesses so far: #{$game.guess_counter}</p><p>Your last guess was #{$game.last_guess} and #{$game.high_low}</p><form action='/game' method='post'>
       <input type='textarea' name='guess'></input>
       <input type='Submit'></input></form>"
-      #method that will check the verb
-      #if verb == post then take param and compare to answer in Game object
-      #if verb == get puts some shit to the screen that queries guess.length
-      #have something to prevent bug if no game object exists
     else
       ""
     end
