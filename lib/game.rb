@@ -18,13 +18,13 @@ class Game
   end
 
   def start
-    "Guess a one digit number:<p><form action='/game' method='post'>
+    "<font face = 'Helvetica'><strong>Guess a one digit number:</font face></strong><p><form action='/game' method='post'>
     <input type='textarea' name='guess'></input>
     <input type='Submit'></input></form></p>"
   end
 
   def next_guess
-    "<p>Total guesses: #{guess_counter}</p><p>Your last guess was #{last_guess} and #{high_low}"
+    "<p><font face = 'Helvetica'><strong>Total guesses: #{guess_counter}</font face></strong></p><p><font face = 'Helvetica'><strong>Your last guess was #{last_guess} and #{high_low}</font face></strong>"
   end
 
   def guess_input_form

@@ -47,7 +47,7 @@ class PathFinder
   end
 
   def new_game_message
-    "Good luck!<p><form action='/start_game' method='post'>
+    "<font face = 'Helvetica'><strong>Good luck!</strong></font face><p><form action='/start_game' method='post'>
     <input type='Submit' value = 'Start Game!'></input></form></p>"
   end
 

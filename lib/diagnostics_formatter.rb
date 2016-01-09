@@ -9,13 +9,13 @@ class DiagnosticsFormatter
   end
 
   def diagnostic_format(request_lines_hash, port)
-    diagnostic_format = ["<pre>" + "Verb: #{request_lines_hash["Verb:"]}",
+    diagnostic_format = ["<!doctype html><html><head></head><body class = 'body'><pre>" + "Verb: #{request_lines_hash["Verb:"]}",
         "Path: #{request_lines_hash["Path:"]}",
         "Protocol: #{request_lines_hash["Protocol:"]}",
         "Host: #{request_lines_hash["Host:"].split(":")[0]}",
         "Port: #{port}",
         "Origin: #{request_lines_hash["Host:"].split(":")[0]}",
-        "Accept: #{request_lines_hash["Accept:"]}" "</pre>"]
+        "Accept: #{request_lines_hash["Accept:"]}" "</pre></body></html>"]
       diagnostic_format
   end
 end
